@@ -35,11 +35,35 @@ class AddFrame extends JFrame
 		c.add(p2);
     
 		btnSave.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ae){
+			public void actionPerformed(ActionEvent ae) {
+				try
+				{
 				String rno = txtRno.getText();
 				String name = txtName.getText();
 				DbHandler db = new DbHandler();
+				if(Integer.parseInt(rno)<0)
+				{
+					throw new NumberGreaterException();	
+				}
+				if
+				//throw new StringOnlyException("name");
+
 				db.addStudent(Integer.parseInt(rno),name);
+				}
+				catch(NumberFormatException nfe)
+				{
+					JOptionPane.showMessageDialog(new JDialog(), "Please Enter Integers only");
+				}
+				catch(NumberGreaterException nge)
+				{
+					JOptionPane.showMessageDialog(new JDialog(), "Number should be greater than 0");	
+				}
+				/*
+				catch(StringOnlyException soe)
+				{
+					JOptionPane.showMessageDialog(new JDialog(), "Number not allowed");	
+				}
+				*/
 			}});
 	
 		btnBack.addActionListener(new ActionListener(){
@@ -56,10 +80,21 @@ class AddFrame extends JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);		
 
-
-		
 		}
-
-
-
 } // end of class Addframe
+
+class NumberGreaterException extends Exception
+{
+}
+
+/*
+class StringOnlyException extends Exception
+{
+	public StringOnlyException(String s)
+	{
+		//name = this.name;
+		super(s);
+		//JOptionPane.showMessageDialog( new JDialog(), name);
+	}
+}
+*/
